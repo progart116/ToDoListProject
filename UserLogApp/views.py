@@ -7,7 +7,18 @@ import UserLogApp.models
 
 
 def login_form(request):
-    return render(request, "UserLogApp/login_form.html")
+    try:
+        if request.user.is_authenticated: return django.http.HttpResponseRedirect(django.urls.reverse("ToDoListApp:view_task_list"))
+        else:
+            context = { 
+                "decorator_redirect": request.GET.get("next", django.urls.reverse("ToDoListApp:view_task_list")), 
+                "user_list": UserLogApp.models.User.objects.filter(is_active=True) 
+            }
+            UserLogApp.models.Logs.objects.create(log_data="Открыта страница аутентификации", app_name="UserLogApp", method_name="views.login_form", program_user=str(request.user))
+            return render(request, "UserLogApp/login_form.html", context)
+    except Exception as ex:
+        UserLogApp.models.Logs.objects.create(log_data=f"Ошибка: {str(ex)}", app_name="UserLogApp", method_name="views.login_form", program_user=str(request.user))
+        raise django.http.HttpResponseServerError()
 
 
 

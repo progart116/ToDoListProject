@@ -1,0 +1,164 @@
+:root
+{
+    --background-color-form: blue;
+    --background-color-input: black;
+
+    --color-submit-button: black;
+    --color-submit-button-background: silver;
+    --color-submit-button-hover: white;
+    --color-submit-button-background-hover: green;
+
+    --error-color: red;
+
+    --name-project-color: aqua;
+}
+
+@media (min-width: 992px)
+{
+
+    *
+    {
+        margin: 0;
+        border: 0;
+        padding: 0;
+        color: white;
+        background-color: black;
+        font-family: Arial;
+        font-size: 30pt;
+    }
+
+    body
+    {
+        height: 100vh;
+        
+    }
+
+    .parrent-container
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        height: 100vh;
+    }
+
+    .form-content
+    {
+        background-color: var(--background-color-form);
+    }
+
+    form
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100%;
+        border-radius: 50px;
+        background-color: var(--background-color-form);
+    }
+
+    .vertical-flex
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: var(--background-color-form);
+        
+    }
+
+    form, form p, form select, form input
+    {
+        background-color: var(--background-color-form);
+    }
+
+    .form-content .login-p
+    {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .form-content .password-p
+    {
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 15px;
+    }
+
+    .form-content .login-select
+    {
+        width: 100%;
+        text-align: center;
+        background-color: var(--background-color-input);
+    }
+
+    .form-content .password-input
+    {
+        width: 100%;
+        text-align: center;
+        background-color: var(--background-color-input)
+    }
+
+    .form-content .submit-p
+    {
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .form-content .submit-p button
+    {
+        width: 100%;
+        color: var(--color-submit-button);
+        background-color: var(--color-submit-button-background);
+        border-radius: 10px;
+        transition: 0.4s;
+        cursor: pointer;
+        margin-top: 40px;
+    }
+
+    .form-content .submit-p button:hover
+    {
+        color: var(--color-submit-button-hover);
+        background-color: var(--color-submit-button-background-hover);
+    }
+
+    .form-content .submit-p a
+    {
+        display: inline-block;
+        width: 100%;
+        color: var(--color-submit-button);
+        background-color: var(--color-submit-button-background);
+        border-radius: 10px;
+        transition: 0.4s;
+        margin-bottom: 10px;
+        text-decoration: none;
+        text-transform: none;
+        margin-top: 20px;
+    }
+
+    .form-content .submit-p a:hover
+    {
+        color: var(--color-submit-button-hover);
+        background-color: var(--color-submit-button-background-hover);
+    }
+
+    .form-content .error-p
+    {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: var(--error-color);
+        font-weight: bold;
+        font-size: 16pt;
+    }
+
+    .name-project
+    {
+        text-align: center;
+        font-weight: bold;
+        color: var(--name-project-color);
+    }
+
+}

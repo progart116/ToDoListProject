@@ -1,14 +1,81 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Аутентификация</title>
+
+    <link rel="stylesheet" href="{% static 'UserLogApp/login_form.css' %}">
+
 </head>
 
 <body>
-    Login form
+    <div class="parrent-container">
+
+        <div></div>
+        <div class="name-project">Проект: простой задачник</div>
+        <div></div>
+
+        <div></div>
+        <div class="form-container">
+
+            <form action="{% url 'UserLogApp:login_post' %}" method="post">
+
+                <div></div>
+
+                <div class="vertical-flex">
+
+                    <div></div>
+
+                    <div class="form-content">
+
+                        {% csrf_token %}
+
+                        <input hidden type="text" id="decorator_redirect" name="decorator_redirect" value="{{decorator_redirect}}">
+                        
+                        <p class="login-p">Логин</p>
+                        <select class="login-select" name="login" id="login">
+                            <datalist>
+                            {% for user in user_list %}
+                                <option class="login-option" value="{{user.django_auth_user.username}}">{{user.django_auth_user.username}}</option>
+                            {% endfor %}
+                            </datalist>
+                        </select>
+                        
+                        <p class="password-p">Пароль</p>
+                        <input class="password-input" type="password" id="password" name="password">
+                        
+                        <p class="submit-p"><button type="submit">Вход</button></p>
+                        
+                        <p class="submit-p"><a href="{% url 'UserLogApp:registration_form' %}" target="_blank">Регистрация</a></p>
+
+                        {% if error %}
+                            <p class="error-p">Ошибка: {{error}}</p>
+                        {% endif %}
+
+                    </div>
+
+                    <div></div>
+
+                </div>
+
+
+                <div></div>
+
+            </form>
+
+        </div>
+        <div></div>
+        
+        <div></div>
+        <div></div>
+        <div></div>
+
+    </div>
+
 </body>
 
 </html>
