@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import django.urls
 
 urlpatterns = [
+    path('', django.urls.include("ToDoListApp.urls")),
+    path('profile/', django.urls.include("UserLogApp.urls")),
     path('admin/', admin.site.urls),
 ]
