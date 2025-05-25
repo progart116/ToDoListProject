@@ -8,3 +8,10 @@ class Task(models.Model):
     deadline = models.DateTimeField('Срок')
     copmpleted = models.BooleanField('Выполнено')
 
+    class Meta:
+        verbose_name = 'Задача'
+        verbose_name_plural = 'Задачи'
+
+    def __str__(self):
+        return f"{self.id}. {self.name} для пользователя {self.user.django_auth_user.username}"
+
