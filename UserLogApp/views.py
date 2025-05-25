@@ -74,7 +74,9 @@ def login_post(request):
 
 
 def logout_user(request):
-    return django.http.HttpResponse("Not implemented: logout")
+    UserLogApp.models.Logs.objects.create(log_data=f"Пользователь {str(request.user)} вышел из системы", app_name="UserLogApp", method_name="views.logout_user", program_user=str(request.user))
+    if request.user.is_authenticated: django.contrib.auth.logout(request)
+    return django.http.HttpResponseRedirect(django.urls.reverse("UserLogApp:login_form"))
 
 
 
