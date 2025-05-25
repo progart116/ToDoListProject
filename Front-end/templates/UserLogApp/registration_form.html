@@ -1,14 +1,59 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Регистрация</title>
+
+    <link rel="stylesheet" href="{% static 'UserLogApp/css/registration_form.css' %}" type="text/css">
+    <script src="{% static 'UserLogApp/js/no_submit.js' %}"></script>
+
 </head>
 
 <body>
-    Registration form
+
+    <form action="{% url 'UserLogApp:registration_post' %}" method="post">
+
+        {% csrf_token %}
+
+        <div></div>
+        
+        <div class="form-content">
+            
+            <div class="left-field"></div>
+            
+            <div class="form-content-inner">
+
+                <p class="name-form">Регистрация пользователя</p>
+            
+                <p class="warning">ВНИМАНИЕ!</p>
+                <p class="warning">После регистрации потребуется подтверждение регистрации администратором</p>
+
+                <p class="field">Логин <input type="text" id="login" name="login" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Пароль <input type="password" id="password" name="password" onkeypress="NoSubmit(event)"></p>
+
+                <p class="field margin-top">Фамилия <input type="text" id="surname" name="surname" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Имя <input type="text" id="firstname" name="firstname" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Отчество <input type="text" id="secondname" name="secondname" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Адрес эл. почты <input type="email" inputmode="email" id="email" name="email" onkeypress="NoSubmit(event)"></p>
+                
+                <p class="margin-top"><button type="submit">Зарегистрироваться</button></p>
+
+                <p class="error">{{error}}</p>
+            
+            </div>
+            
+            <div class="right-field"></div>
+        
+        </div>
+
+        <div></div>
+
+    </form>
+
 </body>
 
 </html>

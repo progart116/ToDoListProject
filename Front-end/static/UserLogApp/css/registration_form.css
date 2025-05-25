@@ -1,0 +1,146 @@
+:root
+{
+    --form-content-background-color: blue;
+    --warning-color: rgb(255, 96, 96);
+    --error-color: red;
+
+    --text-color: white;
+
+    --input-color: black;
+    --input-background-color: white;
+
+    --button-color: black;
+    --button-background-color: white;
+    --button-color-hover: white;
+    --button-background-color-hover: green;
+}
+
+@media (min-width: 992px)
+{
+
+    *
+    {
+        margin: 0;
+        border: 0;
+        padding: 0;
+        color: white;
+        background-color: black;
+        font-size: 20pt;
+    }
+
+    form
+    {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+    }
+
+    .form-content
+    {
+        border-radius: 20px;
+        background-color: var(--form-content-background-color);
+        display: grid;
+        grid-template-columns: 1fr 10fr 1fr;
+    }
+
+    .form-content div
+    {
+        background-color: var(--form-content-background-color);
+    }
+
+    .form-content .left-field
+    {
+        border-radius: 20px 0 0 20px;
+    }
+
+    .form-content .right-field
+    {
+        border-radius: 0 20px 20px 0;
+    }
+
+    .form-content-inner
+    {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-content-inner .warning
+    {
+        color: var(--warning-color);
+        font-weight: bold;
+        text-align: center;
+        background-color: var(--form-content-background-color);
+        margin: 15px 0;
+    }
+
+    .form-content-inner .field
+    {
+        margin: 5px 0;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        color: var(--text-color);
+        background-color: var(--form-content-background-color);
+    }
+
+    .form-content-inner input
+    {
+        color: var(--input-color);
+        background-color: var(--input-background-color);
+    }
+
+    .form-content-inner .margin-top
+    {
+        margin-top: 15px;
+    }
+
+    .form-content-inner p
+    {
+        background-color: var(--form-content-background-color);
+    }
+
+    .form-content-inner p button
+    {
+        padding: 5px 0;
+        width: 100%;
+        border-radius: 15px;
+        color: var(--button-color);
+        background-color: var(--button-background-color);
+        cursor: pointer;
+        transition: 0.4s;
+    }
+
+    .form-content-inner p button:hover
+    {
+        color: var(--button-color-hover);
+        background-color: var(--button-background-color-hover);
+    }
+
+    .form-content-inner p select
+    {
+        color: var(--input-color);
+        background-color: var(--input-background-color);
+    }
+
+    .error
+    {
+        margin-top: 15px;
+        font-size: 16pt;
+        color: var(--error-color);
+        font-weight: bold;
+    }
+
+    .name-form
+    {
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    .form-content-inner p select option
+    {
+        color: var(--input-color);
+        background-color: silver;
+    }
+
+}
