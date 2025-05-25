@@ -5,6 +5,8 @@ import django.http
 import UserLogApp.models
 import django.contrib.auth
 import django.contrib.auth.models
+import django.contrib.auth.hashers
+import django.urls
 
 
 
@@ -116,14 +118,35 @@ def view_profile(request):
 
 @django.contrib.auth.decorators.login_required
 def change_password_form(request):
-    return render(request, "UserLogApp/change_password_form.html")
+    context = { "user": UserLogApp.models.User.objects.get(django_auth_user__username=str(request.user)) }
+    return render(request, "UserLogApp/change_password_form.html", context)
 
 
 
 @django.contrib.auth.decorators.login_required
 @django.views.decorators.http.require_http_methods(["POST"])
 def change_password_post(request):
-    return django.http.HttpResponse("Not implemented: chpwd post")
+    try:
+        login = request.POST.get("login", None)
+        old_password = request.POST.get("old_password", None)
+        new_password = request.POST.get("new_password", None)
+        if login != str(request.user) or not UserLogApp.models.User.objects.filter(django_auth_user__username=login).exists(): return django.http.HttpResponseForbidden()
+        django_auth_user = django.contrib.auth.models.User.objects.get(username=login)
+        if not django.contrib.auth.hashers.check_password(old_password, django_auth_user.password): raise Exception("Некорректный старый пароль")
+        if len(new_password) < 1: raise Exception("Новый пароль не введен")
+        UserLogApp.models.Logs.objects.create(log_data=f"Пользователь {django_auth_user.username} сменил пароль", app_name="UserLogApp", method_name="views.change_password_post", program_user=str(request.user))
+        django_auth_user.set_password(new_password)
+        django_auth_user.save()
+        django.contrib.auth.logout(request)
+        authenticate_user = django.contrib.auth.authenticate(request, username=login, password=new_password)
+        django.contrib.auth.login(request, authenticate_user)
+        return django.http.HttpResponseRedirect(django.urls.reverse("UserLogApp:view_profile"))
+    except Exception as ex:
+        context = { 
+            "user": UserLogApp.models.User.objects.get(django_auth_user__username=str(request.user)),
+            "error": f"Ошибка: {str(ex)}" 
+        }
+        return render(request, "UserLogApp/change_password_form.html", context)
 
 
 

@@ -33,7 +33,7 @@
                 <p class="field">Отчество <input readonly value="{{user.secondname}}" type="text" id="secondname" name="secondname" onkeypress="NoSubmit(event)"></p>
                 <p class="field">Адрес эл. почты <input readonly value="{{user.email}}" type="email" inputmode="email" id="email" name="email" onkeypress="NoSubmit(event)"></p>
 
-                <p class="margin-top"><button type="button">Сменить пароль</button></p>
+                <p class="margin-top"><button type="button" onclick="window.open('{% url 'UserLogApp:change_password_form' %}', '_self')">Сменить пароль</button></p>
                 
             </div>
             
