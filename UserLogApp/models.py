@@ -18,6 +18,10 @@ class User(models.Model):
 
     def __str__(self):
         return f"{self.id}. {self.surname} {self.firstname} {self.secondname} ({self.django_auth_user.username})"
+    
+    def get_full_name(self):
+        try: return f"{self.surname} {self.firstname[0]}.{self.secondname[0]}."
+        except: return self.django_auth_user.username
 
 
 

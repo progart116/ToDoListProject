@@ -1,14 +1,50 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Список задач</title>
+
+    <link rel="stylesheet" href="{% static 'ToDoListApp/list.css' %}">
+
 </head>
 
 <body>
-    List task
+
+    <div class="name-project">Проект: простой задачник</div>
+
+    <div class="user-info">
+        <div>Пользователь: {{user.surname}} {{user.firstname}} {{user.secondname}} ({{user.django_auth_user.username}})</div>
+        <div><a href="{% url 'UserLogApp:logout_user' %}">Выход</a></div>
+    </div>
+
+    <table cellspacing="0">
+        
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Срок</th>
+            <th>Исполнитель</th>
+            <th>Выполнено</th>
+            <th>Отметка о выполнении</th>
+        </tr>
+
+        {% for task in tasks %}
+            <tr>
+                <td>{{task.id}}</td>
+                <td>{{task.name}}</td>
+                <td>{{task.get_full_deadline}}</td>
+                <td>{{task.user.get_full_name}}</td>
+                <td>{{task.verbose_completed}}</td>
+                <td><a href="{% url 'ToDoListApp:complete_task_post' task.id %}">Выполнить</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
 </body>
 
 </html>

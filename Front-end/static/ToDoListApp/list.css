@@ -1,8 +1,63 @@
-*
+:root
 {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    color: white;
-    background-color: black;
+    --name-project-color: aqua;
+    --link-color: aqua;
+}
+
+@media (min-width: 992px)
+{
+
+    *
+    {
+        margin: 0;
+        border: 0;
+        padding: 0;
+        color: white;
+        background-color: black;
+        font-family: Arial;
+        font-size: 30pt;
+    }
+
+    .name-project
+    {
+        text-align: center;
+        font-weight: bold;
+        color: var(--name-project-color);
+        margin-bottom: 50px;
+    }
+
+    .user-info
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    table
+    {
+        font-size: 20pt;
+        margin-top: 25px;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    th, td
+    {
+        font-size: 20pt;
+        border: 1px white solid;
+        text-align: center;
+    }
+
+    td a
+    {
+        font-size: 20pt;
+        color: var(--link-color);
+    }
+
+    a
+    {
+        text-decoration: none;
+        color: var(--link-color);
+    }
+
 }
