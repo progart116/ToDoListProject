@@ -4,6 +4,7 @@ import django.contrib.auth.decorators
 import django.http
 import UserLogApp.models
 import django.contrib.auth
+import django.contrib.auth.models
 
 
 
@@ -87,7 +88,22 @@ def registration_form(request):
 
 @django.views.decorators.http.require_http_methods(["POST"])
 def registration_post(request):
-    return django.http.HttpResponse("Not implemented: reg post")
+    try:
+        login = request.POST.get("login", None)
+        password = request.POST.get("password", None)
+        surname = request.POST.get("surname", None)
+        firstname = request.POST.get("firstname", None)
+        secondname = request.POST.get("secondname", None)
+        email = request.POST.get("email", None)
+        if login=="": raise Exception("Пустой логин")
+        if password=="": raise Exception("Пустой пароль")
+        if django.contrib.auth.models.User.objects.filter(username=login).exists(): raise Exception("Пользователь с таким логином уже существует")
+        django_auth_user = django.contrib.auth.models.User.objects.create_user(username=login, password=password)
+        UserLogApp.models.User.objects.create(django_auth_user=django_auth_user, surname=surname, firstname=firstname, secondname=secondname, email=email, is_active=False)
+        return django.http.HttpResponseRedirect(django.urls.reverse("UserLogApp:login_form"))
+    except Exception as ex:
+        context = { "error": f"Ошибка: {str(ex)}" }
+        return render(request, "UserLogApp/registration_form.html", context)
 
 
 
