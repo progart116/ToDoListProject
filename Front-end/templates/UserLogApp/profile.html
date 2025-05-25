@@ -1,14 +1,50 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Профиль</title>
+
+    <link rel="stylesheet" href="{% static 'UserLogApp/css/registration_form.css' %}" type="text/css">
+    <script src="{% static 'UserLogApp/js/no_submit.js' %}"></script>
+
 </head>
 
 <body>
-    Profile
+
+    <form>
+
+        <div></div>
+        
+        <div class="form-content">
+            
+            <div class="left-field"></div>
+            
+            <div class="form-content-inner">
+
+                <p class="name-form">Профиль пользователя</p>
+            
+                <p class="field">Логин <input readonly value="{{user.django_auth_user.username}}" type="text" id="login" name="login" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Фамилия <input readonly value="{{user.surname}}" type="text" id="surname" name="surname" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Имя <input readonly type="text" value="{{user.firstname}}" id="firstname" name="firstname" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Отчество <input readonly value="{{user.secondname}}" type="text" id="secondname" name="secondname" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Адрес эл. почты <input readonly value="{{user.email}}" type="email" inputmode="email" id="email" name="email" onkeypress="NoSubmit(event)"></p>
+
+                <p class="margin-top"><button type="button">Сменить пароль</button></p>
+                
+            </div>
+            
+            <div class="right-field"></div>
+        
+        </div>
+
+        <div></div>
+
+    </form>
+
 </body>
 
 </html>

@@ -109,7 +109,8 @@ def registration_post(request):
 
 @django.contrib.auth.decorators.login_required
 def view_profile(request):
-    return render(request, "UserLogApp/profile.html")
+    context = { "user": UserLogApp.models.User.objects.get(django_auth_user__username=str(request.user)) }
+    return render(request, "UserLogApp/profile.html", context)
 
 
 
