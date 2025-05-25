@@ -99,7 +99,7 @@ def registration_post(request):
         if password=="": raise Exception("Пустой пароль")
         if django.contrib.auth.models.User.objects.filter(username=login).exists(): raise Exception("Пользователь с таким логином уже существует")
         django_auth_user = django.contrib.auth.models.User.objects.create_user(username=login, password=password)
-        UserLogApp.models.User.objects.create(django_auth_user=django_auth_user, surname=surname, firstname=firstname, secondname=secondname, email=email, is_active=False)
+        UserLogApp.models.User.objects.create(django_auth_user=django_auth_user, surname=surname, firstname=firstname, secondname=secondname, email=email, is_active=True)
         return django.http.HttpResponseRedirect(django.urls.reverse("UserLogApp:login_form"))
     except Exception as ex:
         context = { "error": f"Ошибка: {str(ex)}" }

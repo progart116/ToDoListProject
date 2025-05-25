@@ -21,5 +21,4 @@ import django.urls
 urlpatterns = [
     path('', django.urls.include("ToDoListApp.urls")),
     path('profile/', django.urls.include("UserLogApp.urls")),
-    path('admin/', admin.site.urls),
 ]
