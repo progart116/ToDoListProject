@@ -5,6 +5,7 @@ import django.contrib.auth.decorators
 import django.http
 import ToDoListApp.models
 import UserLogApp.models
+import datetime
 
 
 
@@ -25,14 +26,35 @@ def view_task_list(request):
 
 @django.contrib.auth.decorators.login_required
 def add_task_form(request):
-    return render(request, "ToDoListApp/add_form.html")
+    context = { "login": str(request.user) }
+    UserLogApp.models.Logs.objects.create(log_data=f"Открыта страница добавления задачи", app_name="ToDoListApp", method_name="views.view_task_list", program_user=str(request.user))
+    return render(request, "ToDoListApp/add_form.html", context)
 
 
 
 @django.contrib.auth.decorators.login_required
 @django.views.decorators.http.require_http_methods(["POST"])
 def add_task_post(request):
-    return django.http.HttpResponse("Not implemented: add post")
+    try:
+        login = request.POST.get("login", None)
+        name = request.POST.get("name", None)
+        deadline_date = request.POST.get("deadline_date", None)
+        deadline_time = request.POST.get("deadline_time", None)
+        if login != str(request.user) or not UserLogApp.models.User.objects.filter(django_auth_user__username=login).exists(): return django.http.HttpResponseForbidden()
+        if deadline_date == "": raise Exception("Не указана дата срока")
+        if deadline_time == "": raise Exception("Не указано время срока")
+        deadline = datetime.datetime(int(deadline_date[0:4]), int(deadline_date[5:7]), int(deadline_date[8:10]), int(deadline_time[0:2]), int(deadline_time[3:5]), 0)
+        user = UserLogApp.models.User.objects.get(django_auth_user__username=login)
+        new_task = ToDoListApp.models.Task.objects.create(user=user, name=name, deadline=deadline, completed=False)
+        UserLogApp.models.Logs.objects.create(log_data=f"Добавлена задача {new_task.id}", app_name="ToDoListApp", method_name="views.add_task_post", program_user=str(request.user))
+        return django.http.HttpResponseRedirect(django.urls.reverse("ToDoListApp:view_task_list"))
+    except Exception as ex:
+        context = { 
+            "login": str(request.user),
+            "error": f"Ошибка: {str(ex)}"
+        }
+        UserLogApp.models.Logs.objects.create(log_data=f"Ошибка при добавлении задачи: {str(ex)}. Повторно открыта страница добавления задачи", app_name="ToDoListApp", method_name="views.add_task_post", program_user=str(request.user))
+        return render(request, "ToDoListApp/add_form.html", context)
 
 
 
@@ -49,4 +71,3 @@ def complete_task_post(request, id_task):
     except Exception as ex:
         UserLogApp.models.Logs.objects.create(log_data=f"Ошибка: {str(ex)}", app_name="ToDoListApp", method_name="views.complete_task_post", program_user=str(request.user))
         return django.http.HttpResponseServerError()
-    return django.http.HttpResponse("Not implemented: complete post")

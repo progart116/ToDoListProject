@@ -1,14 +1,53 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Добавление задачи</title>
+
+    <link rel="stylesheet" href="{% static 'UserLogApp/css/registration_form.css' %}" type="text/css">
+    <script src="{% static 'UserLogApp/js/no_submit.js' %}"></script>
+
 </head>
 
 <body>
-    Add task form
+
+    <form action="{% url 'ToDoListApp:add_task_post' %}" method="post">
+
+        {% csrf_token %}
+
+        <div></div>
+        
+        <div class="form-content">
+            
+            <div class="left-field"></div>
+            
+            <div class="form-content-inner">
+
+                <p class="name-form">Добавление задачи</p>
+            
+                <p hidden>Пользователь <input readonly value="{{login}}" type="text" id="login" name="login" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Название задачи <input required type="text" id="name" name="name" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Срок: дата <input required type="date" id="deadline_date" name="deadline_date" onkeypress="NoSubmit(event)"></p>
+                <p class="field">Срок: время <input required type="time" id="deadline_time" name="deadline_time" onkeypress="NoSubmit(event)"></p>
+                
+                <p class="margin-top"><button type="submit">Добавить</button></p>
+
+                <p class="error">{{error}}</p>
+            
+            </div>
+            
+            <div class="right-field"></div>
+        
+        </div>
+
+        <div></div>
+
+    </form>
+
 </body>
 
 </html>
